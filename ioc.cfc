@@ -347,7 +347,11 @@ component {
 			var dir = listLast( dirPath, '/' );
 			var singleDir = singular( dir );
 			var file = listLast( cfcPath, '/' );
-			var beanName = left( file, len( file ) - 4 );
+			if( structKeyExists(variables.config, "beanNamePrefix") ) {
+				var beanName = variables.config.beanNamePrefix & left( file, len( file ) - 4 );
+			} else {
+				var beanName = left( file, len( file ) - 4 );
+			}
 			var dottedPath = deduceDottedPath( cfcPath, folder, mapping, rootRelative );
 			var metadata = { 
 				name = beanName, qualifier = singleDir, isSingleton = !beanIsTransient( singleDir, dir, beanName ), 
